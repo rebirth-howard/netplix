@@ -1,5 +1,6 @@
 package com.hw.netplix.config;
 
+import com.hw.netplix.security.NetplixUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,8 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final NetplixUserDetailsService netplixUserDetailsService;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic(AbstractHttpConfigurer::disable);
@@ -29,17 +32,14 @@ public class SecurityConfig {
         httpSecurity.formLogin(AbstractHttpConfigurer::disable);
         httpSecurity.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
+        httpSecurity.userDetailsService(netplixUserDetailsService);
+
         httpSecurity.authorizeHttpRequests(auth ->
                 auth.anyRequest().authenticated());
 
         httpSecurity.oauth2Login(oauth2 -> oauth2
                 .failureUrl("/login?error=true")
         );
-
-        httpSecurity.userDetailsService(netplixUserDetailsService);
-
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        httpSecurity.addFilterAfter(userHistoryLoggingFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }
