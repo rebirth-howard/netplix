@@ -24,7 +24,7 @@ public class MovieService implements FetchMovieUseCase {
                                 movie.getOverview(),
                                 movie.getReleasedAt()
                         ))
-                        .collect(Collectors.toUnmodifiableList()),
+                        .toList(),
                 tmdbPageableMovies.getPage(),
                 tmdbPageableMovies.isHasNext()
         );

@@ -1,6 +1,4 @@
-plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
-}
+
 rootProject.name = "netplix"
 
 include("netplix-adapters:adapter-http")
