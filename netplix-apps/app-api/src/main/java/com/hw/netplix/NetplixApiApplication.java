@@ -1,4 +1,4 @@
-package com.be.netplix;
+package com.hw.netplix;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

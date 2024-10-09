@@ -12,7 +12,7 @@ plugins {
 }
 
 allprojects {
-    group = "fast.campus"
+    group = "com.hw"
     version = "1.0-SNAPSHOT"
 
     repositories {
