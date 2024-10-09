@@ -4,8 +4,8 @@ dependencies {
 
 }
 
-def appMainClassName = "com.hw.netplix.NetplixBatchApplication"
-tasks.named("bootJar", org.springframework.boot.gradle.tasks.bundling.BootJar) {
+val appMainClassName = "com.hw.netplix.NetplixBatchApplication"
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
     mainClass.set(appMainClassName)
     archiveClassifier.set("boot")
 }
