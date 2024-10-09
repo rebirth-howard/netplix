@@ -1,6 +1,7 @@
 dependencies {
     implementation(project(":netplix-core:core-usecase"))
     implementation(project(":netplix-adapters:adapter-http"))
+    implementation(project(":netplix-adapters:adapter-persistence"))
 
     runtimeOnly(project(":netplix-core:core-service"))
 
