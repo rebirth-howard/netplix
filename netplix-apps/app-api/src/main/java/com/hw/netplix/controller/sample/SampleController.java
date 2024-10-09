@@ -1,5 +1,6 @@
-package com.hw.netplix.sample;
+package com.hw.netplix.controller.sample;
 
+import com.hw.netplix.sample.SearchSampleUseCase;
 import com.hw.netplix.sample.response.SampleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
