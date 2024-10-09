@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SampleController {
 
-    private final SearchSampleUseCase searchSampleUseCase;
-
-    @GetMapping("/api/v1/sample")
-    public SampleResponse getSample() {
-        return searchSampleUseCase.getSample();
-    }
+//    private final SearchSampleUseCase searchSampleUseCase;
+//
+//    @GetMapping("/api/v1/sample")
+//    public SampleResponse getSample() {
+//        return searchSampleUseCase.getSample();
+//    }
 }
