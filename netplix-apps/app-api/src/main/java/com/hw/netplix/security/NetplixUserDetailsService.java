@@ -1,7 +1,7 @@
 package com.hw.netplix.security;
 
 import com.hw.netplix.user.FetchUserUseCase;
-import com.hw.netplix.user.command.UserResponse;
+import com.hw.netplix.user.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;

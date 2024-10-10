@@ -1,4 +1,4 @@
-package com.hw.netplix.user.command;
+package com.hw.netplix.user.response;
 
 import lombok.Builder;
 import lombok.Getter;
