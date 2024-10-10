@@ -1,12 +1,11 @@
-package com.hw.netplix.repository;
+package com.hw.netplix.repository.sample;
 
-import com.hw.netplix.entity.SampleEntity;
+import com.hw.netplix.entity.sample.SampleEntity;
 import com.hw.netplix.sample.SamplePersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository

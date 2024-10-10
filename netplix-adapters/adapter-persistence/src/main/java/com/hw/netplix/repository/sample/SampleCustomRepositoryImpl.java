@@ -1,7 +1,7 @@
-package com.hw.netplix.repository;
+package com.hw.netplix.repository.sample;
 
 import com.hw.netplix.entity.QSampleEntity;
-import com.hw.netplix.entity.SampleEntity;
+import com.hw.netplix.entity.sample.SampleEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

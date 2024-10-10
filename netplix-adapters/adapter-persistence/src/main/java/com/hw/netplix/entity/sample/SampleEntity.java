@@ -1,4 +1,4 @@
-package com.hw.netplix.entity;
+package com.hw.netplix.entity.sample;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
