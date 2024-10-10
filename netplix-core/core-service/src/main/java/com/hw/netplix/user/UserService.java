@@ -35,6 +35,11 @@ public class UserService implements FetchUserUseCase, RegisterUserUseCase {
                 .build();
     }
 
+    @Override
+    public UserResponse findByProviderId(String providerId) {
+        return null;
+    }
+
 
     @Override
     public UserRegistrationResponse register(UserRegistrationCommand command) {
