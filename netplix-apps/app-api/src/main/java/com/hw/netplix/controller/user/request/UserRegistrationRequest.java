@@ -1,11 +1,13 @@
 package com.hw.netplix.controller.user.request;
 
+import com.hw.netplix.annotaion.PasswordEncryption;
 import lombok.Getter;
 
 @Getter
 public class UserRegistrationRequest {
     private final String username;
 
+    @PasswordEncryption
     private String password;
 
     private final String email;

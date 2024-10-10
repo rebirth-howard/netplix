@@ -24,7 +24,7 @@ public class UserController {
                 UserRegistrationCommand.builder()
                         .email(request.getEmail())
                         .username(request.getUsername())
-                        .encryptedPassword(passwordEncoder.encode(request.getPassword()))
+                        .encryptedPassword(request.getPassword())
                         .phone(request.getPhone())
                         .build()
         );
