@@ -4,6 +4,7 @@ import com.hw.netplix.controller.NetplixApiResponse;
 import com.hw.netplix.controller.user.request.UserLoginRequest;
 import com.hw.netplix.controller.user.request.UserRegistrationRequest;
 import com.hw.netplix.security.NetplixAuthUser;
+import com.hw.netplix.token.FetchTokenUseCase;
 import com.hw.netplix.user.RegisterUserUseCase;
 import com.hw.netplix.user.command.UserRegistrationCommand;
 import com.hw.netplix.user.response.UserRegistrationResponse;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +24,7 @@ public class UserController {
 
     private final RegisterUserUseCase registerUserUseCase;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final FetchTokenUseCase fetchTokenUseCase;
 
     @PostMapping("/api/v1/user/register")
     public NetplixApiResponse<UserRegistrationResponse> register(@RequestBody UserRegistrationRequest request) {
@@ -56,6 +57,7 @@ public class UserController {
     public NetplixApiResponse<String> kakaoCallback(@RequestBody Map<String, String> request) {
         String code = request.get("code");
 
+        String accessTokenFromKakao = fetchTokenUseCase.getTokenFromKakao(code);
 
         return NetplixApiResponse.ok(null);
     }
