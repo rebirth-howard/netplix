@@ -2,6 +2,7 @@ package com.hw.netplix.security;
 
 import com.hw.netplix.user.FetchUserUseCase;
 import com.hw.netplix.user.response.UserResponse;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +26,7 @@ public class NetplixUserDetailsService implements UserDetailsService {
                 userByEmail.getPassword(),
                 userByEmail.getEmail(),
                 userByEmail.getPhone(),
-                List.of(new SimpleGrantedAuthority(userByEmail.getRole()))
+                List.of(new SimpleGrantedAuthority(StringUtils.isBlank(userByEmail.getRole()) ? "-" : userByEmail.getRole()))
         );
     }
 }

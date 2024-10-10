@@ -13,18 +13,19 @@ function Login({ setIsLoggedIn }) {
         e.preventDefault();
         try {
             // /login API에 POST 요청
-            const response = await axios.post('http://localhost:8080/api/v1/auth/login', {
+            const response = await axios.post('http://localhost:8080/api/v1/user/login', {
                 email: username,
                 password
             });
 
+            console.log(response);
             if (!response.data.success) {
                 alert('로그인 실패. ' + response.data.code);
             } else {
                 // 응답이 성공하면 로그인 처리 (토큰 저장 등)
                 // 예: localStorage에 토큰 저장
-                localStorage.setItem('token', response.data.data.accessToken);
-                localStorage.setItem('refresh_token', response.data.data.refreshToken);
+                localStorage.setItem('token', response.data.data);
+                localStorage.setItem('refresh_token', response.data.data);
                 // 이후 페이지 이동 또는 로그인 처리 로직 추가
                 setIsLoggedIn(true)
                 // 예: 대시보드로 이동
