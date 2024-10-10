@@ -11,9 +11,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,6 +50,14 @@ public class UserController {
         NetplixAuthUser principal = (NetplixAuthUser) authenticate.getPrincipal();
 
         return NetplixApiResponse.ok("access-token");
+    }
+
+    @PostMapping("/api/v1/user/callback")
+    public NetplixApiResponse<String> kakaoCallback(@RequestBody Map<String, String> request) {
+        String code = request.get("code");
+
+
+        return NetplixApiResponse.ok(null);
     }
 
 
