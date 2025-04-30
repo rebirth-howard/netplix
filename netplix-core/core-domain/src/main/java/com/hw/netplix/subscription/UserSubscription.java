@@ -5,12 +5,10 @@ import lombok.Getter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Builder
 public class UserSubscription {
-	private String userSubscriptionId;
 	private String userId;
 	private SubscriptionType subscriptionType;
 	private LocalDateTime startAt;
@@ -18,7 +16,6 @@ public class UserSubscription {
 	private Boolean validYn;
 
 	public UserSubscription(String userId, SubscriptionType subscriptionType, LocalDateTime startAt, LocalDateTime endAt, Boolean validYn) {
-		this.userSubscriptionId = UUID.randomUUID().toString();
 		this.userId = userId;
 		this.subscriptionType = subscriptionType;
 		this.startAt = startAt;
@@ -30,9 +27,21 @@ public class UserSubscription {
 		this.validYn = false;
 	}
 
+	public void on(SubscriptionType subscription) {
+		if (this.validYn) {
+			//            log.info("현재 구독권을 소지하고 있으므로 신규 구독을 할 수 없습니다. userId={}", this.userId);
+			return;
+		}
+
+		this.subscriptionType = subscription;
+		this.startAt = LocalDateTime.now();
+		this.endAt = getEndAt(this.endAt);
+		this.validYn = true;
+	}
+
 	public void renew() {
 		this.startAt = LocalDateTime.now();
-		this.endAt = getEndAt(startAt);
+		this.endAt = getEndAt(this.endAt);
 		this.validYn = true;
 	}
 
@@ -52,16 +61,16 @@ public class UserSubscription {
 
 	public static UserSubscription newSubscription(String userId) {
 		LocalDateTime now = LocalDateTime.now();
-		return UserSubscription.builder()
-			.userId(userId)
-			.subscriptionType(SubscriptionType.FREE)
-			.startAt(now)
-			.endAt(getEndAt(now))
-			.validYn(true)
-			.build();
+		return new UserSubscription(
+			userId,
+			SubscriptionType.FREE,
+			now,
+			now.plusMonths(1L),
+			true
+		);
 	}
 
-	private static LocalDateTime getEndAt(LocalDateTime startAt) {
+	private LocalDateTime getEndAt(LocalDateTime startAt) {
 		return startAt.plus(Duration.ofDays(30));
 	}
 }
