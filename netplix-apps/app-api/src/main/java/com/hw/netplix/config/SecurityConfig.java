@@ -1,5 +1,6 @@
 package com.hw.netplix.config;
 
+import com.hw.netplix.filter.JwtAuthenticationFilter;
 import com.hw.netplix.security.NetplixUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,8 @@ public class SecurityConfig {
 
     private final NetplixUserDetailsService netplixUserDetailsService;
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.httpBasic(AbstractHttpConfigurer::disable);
@@ -46,6 +49,8 @@ public class SecurityConfig {
         httpSecurity.oauth2Login(oauth2 -> oauth2
                 .failureUrl("/login?error=true")
         );
+
+        httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

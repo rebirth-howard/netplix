@@ -36,6 +36,16 @@ public class MovieService implements FetchMovieUseCase, InsertMovieUseCase {
     }
 
     @Override
+    public PageableMoviesResponse fetchFromDb(int page) {
+        List<NetplixMovie> netplixMovies = persistenceMoviePort.fetchBy(page, 10);
+        return new PageableMoviesResponse(
+            netplixMovies.stream().map(it -> new MovieResponse(it.getMovieName(), it.getIsAdult(), List.of(), it.getOverview(), it.getReleasedAt())).toList(),
+            page,
+            true
+        );
+    }
+
+    @Override
     public void insert(List<MovieResponse> items) {
         items.forEach(it -> {
                 NetplixMovie netplixMovie = NetplixMovie.builder()

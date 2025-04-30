@@ -66,8 +66,7 @@ public class TokenService implements FetchTokenUseCase, CreateTokenUseCase, Upda
     public UserResponse findUserByAccessToken(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
-        // TODO: 오류 아닌가? userId 아님?
-        Object userId = claims.get("user_Id");
+        Object userId = claims.get("userId");
 
         if (ObjectUtils.isEmpty(userId)) {
             throw new RuntimeException();

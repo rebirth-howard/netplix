@@ -14,7 +14,7 @@ function Dashboard() {
             }
         }).then(response => {
             console.log(response)
-            setMovies(response.data.data.movies)
+            setMovies(response.data.data.movieResponses)
         }).catch(error => {
             console.log(error)
         });
@@ -81,22 +81,14 @@ function Dashboard() {
                     <thead className="thead-dark">
                     <tr>
                         <th>영화 이름</th>
-                        <th>장르</th>
                         <th>설명</th>
-                        <th>좋아요</th>
-                        <th>싫어요</th>
-                        <th>다운로드</th>
                     </tr>
                     </thead>
                     <tbody>
                     {movies.map(item => (
                         <tr key={item.movieName}>
                             <td>{item.movieName}</td>
-                            <td>{item.genre}</td>
                             <td>{item.overview}</td>
-                            <td><button onClick={() => like(item.movieName)}>좋아요</button></td>
-                            <td><button onClick={() => unlike(item.movieName)}>싫어요</button></td>
-                            <td><button onClick={() => download(item.movieName)}>download</button></td>
                         </tr>
                     ))}
                     </tbody>
