@@ -84,6 +84,7 @@ function Dashboard() {
                         <th>영화 이름</th>
                         <th>설명</th>
                         <th>다운로드</th>
+                        <th>좋아요</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,6 +93,7 @@ function Dashboard() {
                             <td>{item.movieName}</td>
                             <td>{item.overview}</td>
                             <td><button onClick={() => download(item.movieName)}>다운로드</button></td>
+                            <td><button onClick={() => like(item.movieName)}>좋아요</button></td>
                         </tr>
                     ))}
                     </tbody>

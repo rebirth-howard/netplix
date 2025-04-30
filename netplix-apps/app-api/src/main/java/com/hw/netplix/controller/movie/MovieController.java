@@ -4,6 +4,7 @@ import com.hw.netplix.controller.NetplixApiResponse;
 import com.hw.netplix.filter.JwtTokenProvider;
 import com.hw.netplix.movie.DownloadMovieUseCase;
 import com.hw.netplix.movie.FetchMovieUseCase;
+import com.hw.netplix.movie.LikeMovieUseCase;
 import com.hw.netplix.movie.reponse.MovieResponse;
 import com.hw.netplix.movie.reponse.PageableMoviesResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class MovieController {
     private final FetchMovieUseCase fetchMovieUseCase;
     private final DownloadMovieUseCase downloadMovieUseCase;
     private final JwtTokenProvider jwtTokenProvider;
+    private final LikeMovieUseCase likeMovieUseCase;
 
     @GetMapping("/api/v1/movie/client/{page}")
     public NetplixApiResponse<PageableMoviesResponse> fetchMoviePageable(@PathVariable("page") int page) {
@@ -36,10 +38,19 @@ public class MovieController {
     }
 
     @PostMapping("/api/v1/movie/{movieId}/download")
-    @PreAuthorize("hasAnyRole('ROLE_FREE', 'ROLE_BRONZE', 'ROLE_SILVER', 'ROLE_GOLD')")
+    @PreAuthorize("hasAnyRole('ROLE_BRONZE', 'ROLE_SILVER', 'ROLE_GOLD')")
     public NetplixApiResponse<String> download(@PathVariable String movieId) {
         String userId = jwtTokenProvider.getUserId();
         String role = jwtTokenProvider.getRole();
         return NetplixApiResponse.ok(downloadMovieUseCase.download(userId, role, movieId));
     }
+
+    @PostMapping("/api/v1/movie/{movieId}/like")
+    @PreAuthorize("hasAnyRole('ROLE_FREE', 'ROLE_BRONZE', 'ROLE_SILVER', 'ROLE_GOLD')")
+    public NetplixApiResponse<String> likeMovie(@PathVariable String movieId) {
+        String userId = jwtTokenProvider.getUserId();
+        likeMovieUseCase.like(userId, movieId);
+        return NetplixApiResponse.ok("");
+    }
+
 }
