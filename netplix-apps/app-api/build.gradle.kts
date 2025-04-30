@@ -3,6 +3,7 @@ dependencies {
     implementation(project(":netplix-commons"))
 
     implementation(project(":netplix-core:core-service"))
+
     implementation(project(":netplix-adapters:adapter-http"))
     implementation(project(":netplix-adapters:adapter-persistence"))
     implementation(project(":netplix-adapters:adapter-redis"))
