@@ -1,25 +1,29 @@
 package com.hw.netplix.entity.subscription;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import com.hw.netplix.audit.MutableBaseEntity;
+import com.hw.netplix.subscription.SubscriptionType;
+import com.hw.netplix.subscription.UserSubscription;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import com.hw.netplix.subscription.SubscriptionType;
-import com.hw.netplix.subscription.UserSubscription;
 
 @Getter
 @Entity
 @Table(name = "user_subscriptions")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserSubscriptionEntity {
+public class UserSubscriptionEntity extends MutableBaseEntity {
 	@Id
 	@Column(name = "USER_SUBSCRIPTION_ID")
 	private String userSubscriptionId;
