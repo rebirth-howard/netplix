@@ -30,7 +30,7 @@ public class UserMovieDownloadEntity extends MutableBaseEntity {
 
 	public UserMovieDownload toDomain() {
 		return UserMovieDownload.builder()
-			.userMovieLikeId(userMovieDownloadId)
+			.userMovieDownloadId(userMovieDownloadId)
 			.userId(userId)
 			.movieId(movieId)
 			.build();
@@ -38,7 +38,7 @@ public class UserMovieDownloadEntity extends MutableBaseEntity {
 
 	public static UserMovieDownloadEntity toEntity(UserMovieDownload domain) {
 		return new UserMovieDownloadEntity(
-			domain.getUserMovieLikeId(),
+			domain.getUserMovieDownloadId(),
 			domain.getUserId(),
 			domain.getMovieId()
 		);

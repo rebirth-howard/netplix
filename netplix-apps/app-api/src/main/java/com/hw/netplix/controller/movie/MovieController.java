@@ -1,9 +1,14 @@
 package com.hw.netplix.controller.movie;
 
 import com.hw.netplix.controller.NetplixApiResponse;
+import com.hw.netplix.filter.JwtTokenProvider;
+import com.hw.netplix.movie.DownloadMovieUseCase;
 import com.hw.netplix.movie.FetchMovieUseCase;
+import com.hw.netplix.movie.reponse.MovieResponse;
 import com.hw.netplix.movie.reponse.PageableMoviesResponse;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MovieController {
 
     private final FetchMovieUseCase fetchMovieUseCase;
+    private final DownloadMovieUseCase downloadMovieUseCase;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/api/v1/movie/client/{page}")
     public NetplixApiResponse<PageableMoviesResponse> fetchMoviePageable(@PathVariable("page") int page) {
@@ -26,5 +33,13 @@ public class MovieController {
     public NetplixApiResponse<PageableMoviesResponse> search(@RequestParam int page) {
         PageableMoviesResponse pageableMoviesResponse = fetchMovieUseCase.fetchFromDb(page);
         return NetplixApiResponse.ok(pageableMoviesResponse);
+    }
+
+    @PostMapping("/api/v1/movie/{movieId}/download")
+    @PreAuthorize("hasAnyRole('ROLE_FREE', 'ROLE_BRONZE', 'ROLE_SILVER', 'ROLE_GOLD')")
+    public NetplixApiResponse<String> download(@PathVariable String movieId) {
+        String userId = jwtTokenProvider.getUserId();
+        String role = jwtTokenProvider.getRole();
+        return NetplixApiResponse.ok(downloadMovieUseCase.download(userId, role, movieId));
     }
 }

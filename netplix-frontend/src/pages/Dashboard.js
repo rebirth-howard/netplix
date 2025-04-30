@@ -58,6 +58,7 @@ function Dashboard() {
         }).then(response => {
             console.log(response);
         }).catch(error => {
+            alert(error);
             console.log(error);
         })
     }
@@ -82,6 +83,7 @@ function Dashboard() {
                     <tr>
                         <th>영화 이름</th>
                         <th>설명</th>
+                        <th>다운로드</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -89,6 +91,7 @@ function Dashboard() {
                         <tr key={item.movieName}>
                             <td>{item.movieName}</td>
                             <td>{item.overview}</td>
+                            <td><button onClick={() => download(item.movieName)}>다운로드</button></td>
                         </tr>
                     ))}
                     </tbody>

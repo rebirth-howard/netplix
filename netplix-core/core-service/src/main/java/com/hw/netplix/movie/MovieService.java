@@ -1,5 +1,6 @@
 package com.hw.netplix.movie;
 
+import com.hw.netplix.movie.download.UserMovieDownloadRoleValidator;
 import com.hw.netplix.movie.reponse.MovieResponse;
 import com.hw.netplix.movie.reponse.PageableMoviesResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +14,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MovieService implements FetchMovieUseCase, InsertMovieUseCase {
+public class MovieService implements FetchMovieUseCase, InsertMovieUseCase, DownloadMovieUseCase {
     private final TmdbMoviePort tmdbMoviePort;
     private final PersistenceMoviePort persistenceMoviePort;
+    private final DownloadMoviePort downloadMoviePort;
+    private final List<UserMovieDownloadRoleValidator> validators;
 
     @Override
     public PageableMoviesResponse fetchFromClient(int page) {
@@ -59,5 +62,26 @@ public class MovieService implements FetchMovieUseCase, InsertMovieUseCase {
                 persistenceMoviePort.insert(netplixMovie);
             }
         );
+    }
+
+    @Override
+    public String download(String userId, String role, String movieId) {
+        long cnt = downloadMoviePort.downloadCntToday(userId);
+        // 전략패턴
+        boolean validate = validators.stream()
+            .filter(validator -> validator.isTarget(role))
+            .findAny()
+            .orElseThrow()
+            .validate(cnt);
+
+        if (!validate) {
+            throw new RuntimeException("더 이상 다운로드를 할 수 없습니다.");
+        }
+
+        NetplixMovie by = persistenceMoviePort.findBy(movieId);
+
+        downloadMoviePort.save(UserMovieDownload.newDownload(userId, movieId));
+
+        return by.getMovieName();
     }
 }
